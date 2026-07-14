@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EU Law-making & Budget · EPSO-style MCQ · Hard mode</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue-0:#081634;
+    --blue-1:#0c2150;
+    --blue-line:rgba(255,255,255,.12);
+    --ivory:#FAF7EF;
+    --ivory-2:#EFE9DA;
+    --gold:#FFCC00;
+    --gold-soft:#F6D873;
+    --gold-deep:#C99700;
+    --ink:#14203c;
+    --known:#3FB984;
+    --known-deep:#2c9a6b;
+    --wrong:#C4453A;
+    --shadow:0 24px 60px -24px rgba(0,0,0,.7);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Inter",system-ui,sans-serif;
+    color:#eef2fb;
+    background:
+      radial-gradient(1200px 700px at 80% -10%, #1a3a82 0%, transparent 55%),
+      radial-gradient(900px 600px at -10% 110%, #0e2a66 0%, transparent 50%),
+      linear-gradient(160deg, var(--blue-1) 0%, var(--blue-0) 100%);
+    background-attachment:fixed;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:680px;margin:0 auto;padding:24px 18px 64px}
+
+  /* ---------- Masthead ---------- */
+  .mast{display:flex;align-items:center;gap:14px;padding:8px 2px 22px}
+  .mast .ring-mini{flex:0 0 auto}
+  .mast h1{font-family:"Newsreader",serif;font-weight:500;font-size:1.42rem;line-height:1.1;margin:0;color:#fff}
+  .mast .sub{margin:3px 0 0;font-size:.78rem;color:#9fb0d6;letter-spacing:.3px}
+  .mast .sub b{color:var(--gold-soft);font-weight:600}
+
+  /* ---------- Star ring ---------- */
+  .ring{position:relative;display:inline-block}
+  .ring .star{
+    position:absolute;top:50%;left:50%;transform-origin:center;
+    color:rgba(255,255,255,.16);line-height:1;pointer-events:none;
+    transition:color .45s ease, text-shadow .45s ease;
+  }
+  .ring .star.lit{color:var(--gold);text-shadow:0 0 8px rgba(255,204,0,.55)}
+  .ring .center{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    text-align:center;font-family:"Inter";font-weight:700;color:#fff;line-height:1;
+  }
+
+  /* ---------- Home ---------- */
+  .intro{
+    background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+    border:1px solid var(--blue-line);border-radius:16px;padding:16px 18px;margin-bottom:22px;
+  }
+  .intro p{margin:0;font-size:.9rem;line-height:1.55;color:#c9d4ee}
+  .intro .how{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
+  .chip{font-size:.72rem;color:#0a1c44;background:var(--gold-soft);padding:4px 10px;border-radius:999px;font-weight:600}
+  .chip.ghost{background:transparent;color:#9fb0d6;border:1px solid var(--blue-line);font-weight:500}
+
+  .secthead{display:flex;align-items:baseline;justify-content:space-between;margin:0 4px 12px}
+  .secthead .eyebrow{font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:#8aa0cf}
+  .secthead .tally{font-size:.78rem;color:#aebbdc}
+
+  .mods{display:flex;flex-direction:column;gap:12px}
+  .mod{
+    width:100%;text-align:left;cursor:pointer;display:flex;align-items:center;gap:16px;
+    background:linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.02));
+    border:1px solid var(--blue-line);border-radius:16px;padding:15px 16px;
+    color:inherit;font-family:inherit;
+    transition:transform .15s ease, border-color .2s ease;
+  }
+  .mod:hover{transform:translateY(-2px);border-color:rgba(255,204,0,.35)}
+  .mod:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+  .mod .num{font-family:"Newsreader",serif;font-size:1.5rem;color:var(--gold-soft);width:30px;flex:0 0 auto;text-align:center}
+  .mod .body{flex:1 1 auto;min-width:0}
+  .mod .title{font-family:"Newsreader",serif;font-size:1.06rem;color:#fff;margin:0 0 2px;font-weight:500}
+  .mod .blurb{font-size:.78rem;color:#a9b6d8;margin:0;line-height:1.4}
+  .mod .barwrap{margin-top:9px;height:5px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden}
+  .mod .bar{height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--gold),var(--gold-soft));transition:width .5s ease}
+  .mod .bar.done{background:linear-gradient(90deg,var(--known),#6fe0ab)}
+  .mod .ring-wrap{flex:0 0 auto}
+
+  .toolbar{display:flex;gap:10px;margin-top:22px;justify-content:center;flex-wrap:wrap}
+  .tbtn{
+    font-family:inherit;font-size:.8rem;color:#bcc8e6;background:transparent;
+    border:1px solid var(--blue-line);border-radius:999px;padding:8px 16px;cursor:pointer;
+    transition:border-color .2s ease,color .2s ease;
+  }
+  .tbtn:hover{border-color:rgba(255,204,0,.4);color:#fff}
+  .tbtn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+  /* ---------- Study ---------- */
+  .study{display:none}
+  .study.active{display:block}
+  .home.hidden{display:none}
+
+  .topbar{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+  .back{
+    font-family:inherit;cursor:pointer;color:#cdd8f2;background:transparent;border:none;
+    font-size:.86rem;display:inline-flex;align-items:center;gap:6px;padding:6px 4px;
+  }
+  .back:hover{color:#fff}
+  .back:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:6px}
+  .topbar .deckname{font-family:"Newsreader",serif;font-size:1.04rem;color:#fff;flex:1 1 auto;min-width:0;font-weight:500}
+  .topbar .deckname span{display:block;font-family:"Inter";font-size:.72rem;color:#9fb0d6;font-weight:400}
+
+  .studyhead{display:flex;align-items:center;justify-content:center;gap:18px;margin-bottom:14px}
+  .studyhead .counter{font-size:.8rem;color:#aebbdc;letter-spacing:.04em}
+  .studyhead .counter b{color:#fff;font-weight:600}
+  .studyhead .score{font-size:.8rem;color:#8fd6b4}
+
+  .qcard{
+    background:linear-gradient(180deg,#15347c,#0e2358);
+    border:1px solid rgba(255,255,255,.14);
+    border-radius:22px;padding:24px 22px;box-shadow:var(--shadow);
+  }
+  .qcard .tag{font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;font-weight:600;color:var(--gold-soft);margin-bottom:12px}
+  .qcard .q{font-family:"Newsreader",serif;font-size:1.22rem;line-height:1.35;color:#fff;margin:0 0 18px}
+
+  .opts{display:flex;flex-direction:column;gap:10px}
+  .opt{
+    width:100%;text-align:left;cursor:pointer;font-family:inherit;
+    display:flex;gap:12px;align-items:flex-start;
+    background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.14);
+    border-radius:14px;padding:13px 14px;color:#e6ecfa;font-size:.9rem;line-height:1.45;
+    transition:border-color .15s ease, background .15s ease, opacity .2s ease;
+  }
+  .opt:hover:not(:disabled){border-color:rgba(255,204,0,.45);background:rgba(255,255,255,.08)}
+  .opt:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+  .opt:disabled{cursor:default}
+  .opt .letter{
+    flex:0 0 auto;width:24px;height:24px;border-radius:99px;margin-top:1px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:.72rem;font-weight:700;color:#0a1c44;background:var(--gold-soft);
+  }
+  .opt.correct{background:rgba(63,185,132,.18);border-color:var(--known);color:#eafff4}
+  .opt.correct .letter{background:var(--known);color:#fff}
+  .opt.wrong{background:rgba(196,69,58,.16);border-color:var(--wrong);color:#ffe9e6}
+  .opt.wrong .letter{background:var(--wrong);color:#fff}
+  .opt.dim{opacity:.45}
+
+  .explain{
+    display:none;margin-top:16px;border-radius:16px;padding:16px 18px;
+    background:linear-gradient(180deg,var(--ivory),var(--ivory-2));
+    border:1px solid rgba(20,32,60,.1);color:var(--ink);
+    font-size:.92rem;line-height:1.55;
+  }
+  .explain.show{display:block}
+  .explain .vh{font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;font-weight:700;margin:0 0 6px}
+  .explain.good .vh{color:var(--known-deep)}
+  .explain.bad .vh{color:var(--wrong)}
+  .explain p{margin:0}
+  .explain strong{font-weight:700}
+  .explain em{color:#4a577a}
+
+  .nav{display:flex;align-items:center;justify-content:space-between;margin-top:20px;gap:10px}
+  .nbtn{
+    font-family:inherit;font-size:.82rem;color:#cdd8f2;background:rgba(255,255,255,.06);
+    border:1px solid var(--blue-line);border-radius:999px;padding:9px 16px;cursor:pointer;
+    transition:border-color .2s,color .2s;
+  }
+  .nbtn:hover{border-color:rgba(255,204,0,.4);color:#fff}
+  .nbtn:disabled{opacity:.35;cursor:default}
+  .nbtn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+  .nbtn.primary{background:linear-gradient(180deg,var(--gold),#e6b800);color:#0a1c44;font-weight:700;border:none;padding:10px 22px}
+
+  .filterrow{display:flex;justify-content:center;margin-top:16px}
+  .toggle{
+    font-family:inherit;font-size:.76rem;color:#9fb0d6;background:transparent;
+    border:1px solid var(--blue-line);border-radius:999px;padding:7px 14px;cursor:pointer;
+    display:inline-flex;align-items:center;gap:7px;transition:all .2s;
+  }
+  .toggle.on{background:rgba(255,204,0,.12);border-color:rgba(255,204,0,.5);color:#fff}
+  .toggle:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+  .dot{width:7px;height:7px;border-radius:99px;background:#6c748c}
+  .toggle.on .dot{background:var(--gold)}
+
+  .done-banner{
+    text-align:center;background:linear-gradient(180deg,rgba(63,185,132,.16),rgba(63,185,132,.06));
+    border:1px solid rgba(63,185,132,.4);border-radius:18px;padding:22px;margin-top:4px;display:none;
+  }
+  .done-banner.show{display:block}
+  .done-banner h3{font-family:"Newsreader",serif;font-weight:500;color:#fff;margin:8px 0 6px;font-size:1.2rem}
+  .done-banner p{margin:0;color:#bfe6d3;font-size:.86rem}
+
+  .foot{text-align:center;margin-top:30px;font-size:.74rem;color:#7e8db0;line-height:1.5}
+
+  @media (max-width:480px){
+    .wrap{padding:18px 14px 56px}
+    .qcard .q{font-size:1.1rem}
+    .mod .blurb{display:none}
+  }
+  @media (prefers-reduced-motion:reduce){ *{transition-duration:.001ms !important} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ HOME ============ -->
+  <section class="home" id="home">
+    <header class="mast">
+      <div class="ring-mini" id="mastRing"></div>
+      <div>
+        <h1>Law-making &amp; the Budget</h1>
+        <p class="sub">OLP · SLP · comitology · MFF · <b>Hard mode</b></p>
+      </div>
+    </header>
+
+    <div class="intro">
+      <p>Built from your five procedure fiches, written the way EPSO writes them: four options that are <strong>almost identical</strong> — same sentence, one changed deadline, majority or institution (<em>consent</em> vs <em>consulting</em>). A correct first tap counts as mastered; a wrong one keeps the question in your review pool.</p>
+      <div class="how">
+        <span class="chip">Official exam style</span>
+        <span class="chip ghost">7 modules</span>
+        <span class="chip ghost">Options reshuffled each time</span>
+      </div>
+    </div>
+
+    <div class="secthead">
+      <span class="eyebrow">From proposal to payment</span>
+      <span class="tally" id="globalTally">—</span>
+    </div>
+
+    <div class="mods" id="modList"></div>
+
+    <div class="toolbar">
+      <button class="tbtn" id="reviewAllBtn">Full mock (all modules, shuffled)</button>
+      <button class="tbtn" id="resetBtn">Reset progress</button>
+    </div>
+
+    <p class="foot">Train to spot the ONE word that changes between options:<br>votes cast vs component members · 6 weeks vs 3 months · consent vs opinion.</p>
+  </section>
+
+  <!-- ============ STUDY ============ -->
+  <section class="study" id="study">
+    <div class="topbar">
+      <button class="back" id="backBtn">‹ Back</button>
+      <div class="deckname" id="deckName">—<span id="deckSub"></span></div>
+      <div class="ring-mini" id="deckRing"></div>
+    </div>
+
+    <div class="studyhead">
+      <span class="counter">Question <b id="cardPos">1</b> of <b id="cardTotal">1</b></span>
+      <span class="score" id="sessScore"></span>
+    </div>
+
+    <div class="qcard" id="qcard">
+      <div class="tag" id="frontTag">Module</div>
+      <p class="q" id="qText">—</p>
+      <div class="opts" id="opts"></div>
+      <div class="explain" id="explain">
+        <p class="vh" id="verdictHead">Correct</p>
+        <p id="expText">—</p>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="nbtn" id="prevBtn">‹ Previous</button>
+      <button class="nbtn primary" id="nextBtn" style="visibility:hidden">Next ›</button>
+      <button class="nbtn" id="shuffleBtn">Shuffle</button>
+    </div>
+
+    <div class="filterrow">
+      <button class="toggle" id="missesToggle"><span class="dot"></span>Review only what I haven't mastered</button>
+    </div>
+
+    <div class="done-banner" id="doneBanner">
+      <div class="ring-mini" id="doneRing" style="margin:0 auto"></div>
+      <h3>Module mastered</h3>
+      <p>Every question answered correctly. Come back in a few days — spaced repetition is what makes it stick for exam day.</p>
+    </div>
+  </section>
+
+</div>
+
+<script>
+/* ============================ DATA ============================
+   Each question: q, opts (index 0 = correct; shuffled at render), exp
+================================================================ */
+const MODULES = [
+/* ==================== MODULE 1: OLP — INITIATIVE & FIRST READING ==================== */
+{ id:"m1", n:"1", name:"OLP: initiative & first reading", blurb:"Who may propose · 8 weeks · general approach vs trilogue · no deadline",
+  cards:[
+    {q:"Which treaty officially renamed codecision the 'ordinary legislative procedure', extending it to 85 areas of Union action?",
+     opts:["The Lisbon Treaty — after Maastricht introduced codecision, Amsterdam simplified it and extended it to over 40 legal bases, and Nice extended it further.",
+           "The Amsterdam Treaty — after Maastricht introduced codecision for the internal market.",
+           "The Nice Treaty — which extended codecision to agriculture, fisheries and the common commercial policy.",
+           "The Maastricht Treaty — which created codecision covering 85 areas."],
+     exp:"The staircase: <strong>Maastricht creates codecision</strong> (limited, mainly internal market) → <strong>Amsterdam simplifies it (first-reading agreements possible) and extends it to 40+ legal bases</strong> → <strong>Nice extends further</strong> → <strong>Lisbon renames it the OLP, 85 areas</strong> — including agriculture, fisheries and the common commercial policy."},
+    {q:"When the Commission submits a legislative proposal, national parliaments may issue reasoned opinions on subsidiarity normally within:",
+     opts:["Eight weeks.",
+           "Six weeks.",
+           "Two months, extendable by two months.",
+           "Ten working days."],
+     exp:"<strong>8 weeks</strong> for the subsidiarity check. Don't confuse with the OLP's <strong>6-week</strong> conciliation deadlines or the <strong>2+2 months</strong> objection window for delegated acts — the exam thrives on mixing these three clocks."},
+    {q:"In its first reading under the OLP, the European Parliament acts by:",
+     opts:["A majority of the votes cast, with no time limit for delivering its position.",
+           "A majority of its component members, within three months.",
+           "A majority of the votes cast, within three months extendable by one month.",
+           "A majority of its component members, with no time limit."],
+     exp:"First reading: <strong>votes cast + NO deadline</strong> (for both institutions). The <strong>component-members majority and the 3+1-month clock belong to the SECOND reading</strong>. Remember the fiche's rule of thumb: the EP acts by votes cast <em>except</em> to reject or amend at second reading."},
+    {q:"Before the Parliament delivers its first-reading opinion, the Council may adopt a 'general approach', which is:",
+     opts:["A political agreement giving the Parliament an idea of the Council's position, which can speed up the procedure — but the Council's formal first-reading position can only come after Parliament's opinion.",
+           "The Council's formal first-reading position, adopted before the Parliament's opinion.",
+           "A binding negotiating mandate for the trilogues, adopted jointly with the Commission.",
+           "An informal document of the rotating presidency, without the status of a Council position."],
+     exp:"A general approach is <strong>political, not a formal position</strong> — the formal Council position can only follow the EP's first-reading opinion. <strong>Trilogues</strong> are informal EP–Council–Commission meetings; whatever they produce must still be <strong>approved under each institution's own rules</strong>."},
+    {q:"In which case may EU legislative acts be adopted on the initiative of the European Parliament itself?",
+     opts:["Rules on committees of inquiry — a special legislative procedure requiring the consent of the Council and of the Commission.",
+           "Rules on the funding of European political parties.",
+           "The Statute of the Court of Justice.",
+           "Anti-discrimination legislation under the flexibility clause."],
+     exp:"The EP's own-initiative slot: <strong>committees of inquiry (with Council AND Commission consent)</strong> — plus rules on its own Members. The other exceptions: <strong>1/4 of Member States</strong> (criminal-judicial and police cooperation), <strong>ECB recommendation</strong> (its statute), <strong>CJEU request</strong> (statute, specialised courts), <strong>EIB request</strong> (statute)."},
+    {q:"The Commission may withdraw its legislative proposal:",
+     opts:["As long as the Council has not acted — but withdrawal is not an arbitrary veto: the Commission must respect institutional balance and give reasons.",
+           "At any time until the act is signed, without giving reasons.",
+           "Only with the agreement of the Parliament and the Council.",
+           "Never, once the Parliament has appointed a rapporteur."],
+     exp:"Amendment or withdrawal is possible <strong>as long as the Council has not acted</strong> — and the Court requires respect for <strong>institutional balance plus reasons</strong>: no arbitrary veto. Requests to propose can come from the <strong>EP (majority of component members)</strong> or the <strong>Council (simple majority)</strong>, but neither legally obliges the Commission — same as a successful ECI."},
+    {q:"When the Council does NOT act on a proposal from the Commission or the High Representative, the qualified majority is:",
+     opts:["At least 72% of the Member States — 20 of 27 — representing at least 65% of the EU population.",
+           "At least 55% of the Member States representing at least 65% of the EU population.",
+           "At least 72% of the Member States representing at least 55% of the EU population.",
+           "Unanimity, since no Commission proposal exists."],
+     exp:"The <strong>reinforced QMV: 72% of States (=20) + 65% of the population</strong>. Ordinary QMV (55% = 15 States + 65%) applies when the Commission or the HR is the author. Swapping 72/65 for 72/55 is the standard one-digit trap."}
+  ]},
+
+/* ==================== MODULE 2: OLP — SECOND READING TO THIRD ==================== */
+{ id:"m2", n:"2", name:"OLP: second reading & conciliation", blurb:"3 months + 1 · the unanimity exception · 6 weeks everywhere",
+  cards:[
+    {q:"At second reading, the European Parliament REJECTS the Council's position by:",
+     opts:["A majority of its component members — the act is not adopted and the procedure ends.",
+           "A majority of the votes cast — the act returns to the Council for a new position.",
+           "A two-thirds majority of the votes cast — the act is not adopted.",
+           "A majority of its component members — the Conciliation Committee is then convened."],
+     exp:"Second-reading rejection: <strong>majority of COMPONENT members, procedure DEAD</strong> — no conciliation, no return. Approval (or silence) needs only votes cast and the act as amended by the Council is adopted; <strong>amendments</strong> also require component members. Deadline: <strong>3 months, extendable by 1</strong>."},
+    {q:"At second reading, the Council must act unanimously on:",
+     opts:["The Parliament's amendments on which the Commission has delivered a negative opinion.",
+           "All of the Parliament's second-reading amendments.",
+           "Any amendment with budgetary implications.",
+           "Amendments rejected by the Conciliation Committee."],
+     exp:"The one unanimity pocket in the OLP: <strong>EP amendments carrying a NEGATIVE Commission opinion</strong>. Everything else in the Council runs on <strong>QMV</strong>. If the Council cannot approve all amendments, the <strong>Conciliation Committee is convened within 6 weeks</strong>."},
+    {q:"The Conciliation Committee is composed of:",
+     opts:["An equal number of Council representatives (one per Member State) and Parliament representatives (appointed by the political groups), chaired by a Vice-President of the Parliament, and assisted by the Commission.",
+           "An equal number of Council and Parliament representatives, chaired jointly by the President of the Council and the President of the Parliament.",
+           "One representative per Member State from the Council and the chairs of the parliamentary committees concerned, chaired by the Commission.",
+           "Representatives of the three institutions in equal numbers."],
+     exp:"<strong>27 + 27, EP side appointed by the political groups and CHAIRED BY AN EP VICE-PRESIDENT, Commission assists</strong> (it is not a member). Approval of a joint text inside the committee: <strong>QMV of the Council representatives + majority of the EP representatives</strong>."},
+    {q:"The deadlines in the conciliation phase are:",
+     opts:["The committee must be convened within 6 weeks (extendable to 8) and then has 6 weeks (extendable to 8) to agree on a joint text.",
+           "The committee must be convened within 3 months and has 6 weeks to agree on a joint text.",
+           "The committee must be convened within 6 weeks and has 3 months (extendable by one month) to agree.",
+           "The committee must be convened within 8 weeks and has 8 weeks, without any extension, to agree."],
+     exp:"Symmetry: <strong>6+2 to convene, 6+2 to agree</strong>. No joint text = the act falls and the procedure ends. The <strong>3+1 months</strong> clock belongs to the second reading — a different phase."},
+    {q:"At third reading, the Parliament and the Council:",
+     opts:["May only approve or reject the joint text — not amend it — each within 6 weeks (extendable by 2), the Parliament acting by a majority of votes cast and the Council by qualified majority.",
+           "May approve, reject or amend the joint text within 6 weeks.",
+           "May only approve or reject the joint text, the Parliament acting by a majority of its component members.",
+           "Must approve the joint text, which is deemed adopted unless rejected within 6 weeks."],
+     exp:"Third reading is binary: <strong>approve or reject (or fail to act = rejection), never amend</strong>. <strong>EP: votes cast; Council: QMV; 6 weeks + 2</strong>. Failing to act kills the text — silence is NOT adoption here, unlike the EP's second-reading silence which lets the Council text pass."},
+    {q:"Which statement correctly summarises the Parliament's voting rules across the OLP?",
+     opts:["The Parliament acts by a majority of votes cast, except to reject or amend the Council's position at second reading (component members) and in its conciliation delegation (majority of its representatives).",
+           "The Parliament always acts by a majority of its component members.",
+           "The Parliament acts by a majority of component members, except at first reading (votes cast).",
+           "The Parliament acts by a majority of votes cast at every stage without exception."],
+     exp:"The fiche's summary rule verbatim: <strong>votes cast everywhere EXCEPT second-reading rejection/amendment (component members) and inside the Conciliation Committee (majority of the EP's representatives)</strong>. Mirror rule for the Council: <strong>always QMV except EP amendments with a negative Commission opinion (unanimity)</strong>."},
+    {q:"If the Conciliation Committee does not agree on a joint text:",
+     opts:["The legislative act is not adopted and the procedure is ended.",
+           "The Commission must submit an amended proposal within 6 weeks.",
+           "The Council's second-reading position is deemed adopted.",
+           "The procedure restarts with a new first reading."],
+     exp:"No joint text = <strong>the act dies, full stop</strong> — no fallback to the Council position, no automatic new proposal. The same fate awaits a joint text that either institution rejects or fails to approve at third reading."},
+    {q:"At second reading, if the Parliament takes NO decision within the deadline:",
+     opts:["The act is deemed adopted as amended by the Council.",
+           "The act is not adopted and the procedure ends.",
+           "The Conciliation Committee is automatically convened.",
+           "The Council may adopt the act only by unanimity."],
+     exp:"Second-reading silence = <strong>consent: the Council-amended act is ADOPTED</strong>. Contrast third reading, where failing to act means the joint text is <strong>NOT adopted</strong>. Two silences, opposite outcomes — a purpose-built trap pair."}
+  ]},
+
+/* ==================== MODULE 3: SPECIAL LEGISLATIVE PROCEDURES ==================== */
+{ id:"m3", n:"3", name:"Special legislative procedures", blurb:"Consultation vs consent · where each applies · the flexibility clause",
+  cards:[
+    {q:"Under the consultation procedure, if the Council intends to substantially amend the Commission's proposal after Parliament has been consulted:",
+     opts:["It is required to consult the Parliament again — and the absence of consultation makes the act illegal and open to annulment by the Court of Justice.",
+           "It may proceed, since the Parliament's opinion is in any event not binding.",
+           "It must obtain the Parliament's consent to the amended text.",
+           "It must return the proposal to the Commission for re-adoption."],
+     exp:"Two teeth in an otherwise weak procedure: <strong>re-consultation upon substantial amendment</strong>, and <strong>annulment by the CJEU</strong> if consultation was skipped. The Council is bound only by the <strong>obligation to consult</strong>, never by the opinion's content."},
+    {q:"Under the consent procedure, the European Parliament:",
+     opts:["May approve or reject the proposed act but cannot amend it — and without its consent the act cannot be adopted.",
+           "May approve, reject or amend the proposed act.",
+           "Delivers a non-binding opinion within a deadline set by the Council.",
+           "May reject the act only by a two-thirds majority of the votes cast."],
+     exp:"Consent = <strong>a veto without a pen</strong>: approve or reject, no amendments, no formal role in the preceding stages. That is exactly the EP's position on the <strong>MFF Regulation</strong> — and on accession, withdrawal and association agreements."},
+    {q:"In which of the following cases does the CONSULTATION procedure (not consent) apply?",
+     opts:["The adoption of the Own Resources Decision, with unanimity in the Council.",
+           "The adoption of the MFF Regulation, with unanimity in the Council.",
+           "The accession of new Member States under Article 49 TEU.",
+           "Anti-discrimination legislation."],
+     exp:"The exam's favourite budget pair, inverted at will: <strong>Own Resources = CONSULTATION (opinion) + Council unanimity + national ratification; MFF = CONSENT + Council unanimity</strong>. Accession (Art 49) and anti-discrimination legislation both take <strong>consent</strong>. Consultation otherwise lives in: internal market exemptions, competition, indirect taxation, some IP and administrative matters."},
+    {q:"The consent procedure applies as a NON-legislative procedure to all of the following EXCEPT:",
+     opts:["The adoption of measures under the flexibility clause, where EU competences have not been explicitly granted.",
+           "Both limbs of Article 7 TEU concerning breaches of EU values.",
+           "The conclusion of association agreements and agreements in fields covered by the ordinary legislative procedure.",
+           "Accession to the EU under Article 49 and withdrawal arrangements under Article 50."],
+     exp:"The <strong>flexibility clause</strong> (subsidiary general legal basis) is listed in the fiche as a <strong>LEGISLATIVE</strong> use of consent — alongside the MFF Regulation and anti-discrimination measures. The non-legislative side: international agreements, <strong>Art 7 (both 7(1) and 7(2))</strong>, Art 49 accession, Art 50 withdrawal."},
+    {q:"For international agreements in the field of the CFSP, the European Parliament:",
+     opts:["Is only informed, with the Council acting by unanimity.",
+           "Gives its consent, with the Council acting by unanimity.",
+           "Is consulted, with the Council acting by qualified majority.",
+           "Gives its consent, by a majority of its component members."],
+     exp:"CFSP agreements are the carve-out from the consent list: <strong>Parliament merely INFORMED, Council unanimous</strong>. Consent covers association agreements, agreements with significant budgetary implications, agreements in OLP fields, and EU accession to the ECHR."},
+    {q:"In the rare Parliament-led special legislative procedures, the Parliament adopts the act:",
+     opts:["With the consent of the Council — for example for the rules governing its own Members or committees of inquiry.",
+           "After consulting the Council — for example for its own Rules of Procedure.",
+           "Jointly with the Commission, bypassing the Council.",
+           "Alone, without the involvement of any other institution."],
+     exp:"Most SLPs are <strong>Council-led</strong>; the mirror-image exceptions have <strong>Parliament adopting with Council consent</strong> (committees of inquiry also need the Commission's). An SLP means precisely that the two institutions are <strong>not on an equal footing</strong>."}
+  ]},
+
+/* ==================== MODULE 4: DELEGATED & IMPLEMENTING ACTS ==================== */
+{ id:"m4", n:"4", name:"Delegated & implementing acts", blurb:"Art 290 vs 291 · expert groups vs comitology · the two urgency regimes",
+  cards:[
+    {q:"Delegated acts, within the meaning of Article 290 TFEU, are:",
+     opts:["Non-legislative acts of general application that may supplement or amend non-essential elements of a legislative act, on the basis of a delegation contained in that act.",
+           "Non-legislative acts ensuring uniform conditions for implementing EU laws.",
+           "Legislative acts of general application adopted by the Commission on a delegation from the Council.",
+           "Non-legislative acts that may amend any element of a legislative act, including essential ones."],
+     exp:"Delegated = <strong>general application + supplement or AMEND, but only NON-ESSENTIAL elements</strong>, delegation written into a <strong>legislative act</strong> defining objective, content, scope and duration. 'Uniform conditions for implementing' is the <strong>Article 291 implementing-act</strong> formula — and implementing acts may <strong>never modify</strong> the basic act. Both are adopted mainly by the Commission (rarely the Council); the split dates from <strong>Lisbon</strong>."},
+    {q:"When preparing DELEGATED acts, the Commission consults:",
+     opts:["Expert groups set up by the Commission, composed of representatives from each Member State, with Parliament and Council experts as observers — and the experts' views are not binding.",
+           "Comitology committees in which every EU country is represented, chaired by the Commission.",
+           "The Regulatory Scrutiny Board, whose positive opinion is required.",
+           "The European Parliament's committees, whose opinion is binding."],
+     exp:"<strong>Delegated → EXPERT GROUPS (non-binding, EP/Council experts observe); implementing → COMITOLOGY COMMITTEES (Member State oversight with real voting)</strong>. That institutional difference is the whole point: delegated acts are controlled by the LEGISLATOR afterwards; implementing acts by the MEMBER STATES beforehand."},
+    {q:"To object to a delegated act before it enters into force, the Parliament and the Council act respectively by:",
+     opts:["A majority of the Parliament's component members and a reinforced qualified majority in the Council, within two months, extendable by two months.",
+           "A majority of the votes cast in Parliament and a qualified majority in the Council, within two months.",
+           "A majority of the Parliament's component members and unanimity in the Council, within eight weeks.",
+           "A majority of the votes cast in Parliament and a reinforced qualified majority in the Council, within six weeks."],
+     exp:"Objection thresholds: <strong>EP component members · Council REINFORCED QMV · 2 months + 2</strong>. No objection = entry into force. The legislator can also write into the delegation a <strong>right of revocation</strong> for the future. Every distractor swaps exactly one of the three parameters."},
+    {q:"Under the urgency procedure for DELEGATED acts:",
+     opts:["The act enters into force immediately upon notification to the Parliament and the Council, and applies as long as no objection is expressed — if one is, the Commission must repeal the act without delay.",
+           "The act applies immediately and remains in force for a maximum of six months.",
+           "The act must be submitted to the relevant committee within 14 days of adoption.",
+           "The act enters into force only after a shortened objection period of two weeks."],
+     exp:"Two urgency regimes, never to be mixed: <strong>delegated — in force on notification, lives until an objection, repeal without delay if one comes</strong>; <strong>implementing — applies immediately, max 6 MONTHS, committee consulted ex post within 14 DAYS, immediate repeal after a negative examination-procedure opinion</strong>. Options b) and c) describe the implementing regime."},
+    {q:"In the examination procedure, if the comitology committee delivers a NEGATIVE opinion (qualified majority against), the Commission may:",
+     opts:["Amend the draft within two months or refer it to the appeal committee within one month.",
+           "Adopt the act anyway, taking utmost account of the committee's opinion.",
+           "Adopt the act only with the consent of the European Parliament.",
+           "Only withdraw the draft definitively."],
+     exp:"Negative opinion → <strong>amend (2 months) OR appeal committee (1 month)</strong> — the appeal committee is made up of Member State representatives voting by QM. 'Utmost account, not binding' is the <strong>ADVISORY procedure</strong> (simple-majority opinion). With NO opinion, the Commission usually may adopt — except in sensitive areas (taxation, financial services, health…) or where the basic act forbids it."},
+    {q:"The examination procedure is used in particular for:",
+     opts:["Measures with general scope and measures with a potentially important impact, for example in taxation, agriculture, health, trade or the environment.",
+           "All implementing acts without exception, since the 2011 Comitology Regulation.",
+           "Measures of individual scope with limited impact.",
+           "Only measures implementing the common agricultural policy."],
+     exp:"Examination = <strong>general scope + potentially important impact</strong> (taxation, agriculture, health, trade, environment); everything lighter goes to the <strong>advisory</strong> procedure. Legal framework: the <strong>2011 Comitology Regulation</strong>."},
+    {q:"The Regulatory Procedure with Scrutiny (RPS):",
+     opts:["Can no longer be used for new legislation but remains applicable to older acts in force that refer to it — the committee votes first, then Parliament and Council have a veto right.",
+           "Was introduced by the Lisbon Treaty to replace the advisory procedure.",
+           "Is the current standard procedure for delegated acts.",
+           "Allows national parliaments to veto implementing acts."],
+     exp:"RPS is the <strong>living fossil</strong>: pre-Lisbon comitology that survives only inside older basic acts — <strong>committee vote first, then an EP/Council veto</strong>. New legislation must choose between Art 290 delegation and Art 291 comitology. The Commission keeps a <strong>register of delegated and implementing acts</strong> covering their whole lifecycle."},
+    {q:"Under the better regulation agenda, citizens and stakeholders can give feedback on the draft text of a delegated or implementing act:",
+     opts:["During a four-week period — with exceptions, for example in case of emergency or when they have already contributed.",
+           "During an eight-week period, aligned with the subsidiarity check.",
+           "Only via the comitology committee's public hearings.",
+           "During a two-month period matching the objection deadline."],
+     exp:"<strong>Four weeks</strong>, for both act types — for implementing acts the feedback happens <strong>before the committee votes</strong>, an overview goes to the committee and the discussion enters the <strong>published summary record</strong> in the comitology register. The 8-week and 2-month figures belong to other clocks entirely."},
+    {q:"A basic act empowering the Commission to adopt IMPLEMENTING acts may be:",
+     opts:["Any legally binding Union act — not just a legislative act.",
+           "Only a legislative act adopted under the ordinary legislative procedure.",
+           "Only a regulation, to the exclusion of directives and decisions.",
+           "Only an act adopted jointly by the Parliament and the Council."],
+     exp:"A subtle asymmetry: <strong>delegations (Art 290) can only sit in LEGISLATIVE acts; implementing powers (Art 291) can flow from ANY legally binding Union act</strong>. One word — 'legislative' — separates the two regimes."}
+  ]},
+
+/* ==================== MODULE 5: MFF & OWN RESOURCES ==================== */
+{ id:"m5", n:"5", name:"MFF & own resources", blurb:"Art 312 · consent vs opinion · plastic at €0.80 · who gets rebates",
+  cards:[
+    {q:"Under Article 312 TFEU, the multiannual financial framework:",
+     opts:["Is established for a period of at least five years and sets annual ceilings for commitment appropriations by category and an overall annual ceiling for payment appropriations.",
+           "Is established for exactly seven years and sets ceilings for payment appropriations only.",
+           "Is established for at least five years and sets binding annual budgets for each heading.",
+           "Is established for at least seven years and is adopted by the European Council."],
+     exp:"<strong>At least FIVE years</strong> (seven in practice — six MFFs so far, including 2021–2027), <strong>commitment ceilings per heading + one overall payment ceiling</strong>, plus special instruments and flexibility mechanisms. The MFF frames the annual budgets; it does not replace them. Lisbon turned it from an <strong>interinstitutional agreement into a Council regulation</strong>."},
+    {q:"The MFF Regulation is adopted by:",
+     opts:["The Council acting unanimously, after the Parliament has given its consent — the Parliament may approve or reject the Council's position but cannot amend it.",
+           "The Council acting unanimously, after consulting the Parliament.",
+           "The Parliament and the Council under the ordinary legislative procedure.",
+           "The European Council acting by consensus, with the Parliament's consent."],
+     exp:"<strong>Council unanimity + EP CONSENT (no amendments)</strong> — a special legislative procedure. The European Council provides political guidance through its conclusions but <strong>does not adopt</strong> the regulation. The 2023–24 mid-term revision followed <strong>the same procedure</strong>."},
+    {q:"Before the Own Resources Decision can enter into force, it requires:",
+     opts:["Unanimous agreement in the Council, an opinion from the Parliament, and approval by every Member State in accordance with its constitutional requirements.",
+           "Unanimous agreement in the Council and the consent of the Parliament.",
+           "A qualified majority in the Council, an opinion from the Parliament, and national ratification.",
+           "Unanimous agreement in the European Council and the consent of the Parliament."],
+     exp:"The ORD triple lock: <strong>Council unanimity · EP OPINION (mere consultation) · ratification by all Member States</strong>. Swap 'opinion' for 'consent' and you have the MFF — which needs <strong>no national approval</strong>. The single most reliable trap in EU budget law."},
+    {q:"Which statement about the own resources of the EU is correct?",
+     opts:["The GNI-based resource finances the bulk of the budget (around 60–70%), traditional own resources account for roughly 10–15%, the VAT-based resource around 10%, and the plastic contribution around 3–4%.",
+           "The VAT-based resource finances the bulk of the budget, with the GNI resource as a residual top-up.",
+           "Traditional own resources remain the largest source, as they have been since 1970.",
+           "The plastic contribution has replaced the VAT-based resource since 2021."],
+     exp:"Today's mix: <strong>GNI ~60–70% (originally a residual, now the backbone) · TOR (customs duties) ~10–15% · VAT ~10% · plastic ~3–4%</strong>. Member States retain <strong>25%</strong> of customs duties for collection costs (raised back from 20%). The plastic resource: <strong>€0.80 per kilogram</strong> of non-recycled plastic packaging waste, since 1 January 2021."},
+    {q:"Although the UK rebate no longer applies, lump-sum corrections over 2021–2027 continue to benefit:",
+     opts:["Denmark, Germany, the Netherlands, Austria and Sweden.",
+           "Germany, France, the Netherlands, Austria and Sweden.",
+           "Denmark, Germany, Ireland, Austria and Sweden.",
+           "The Netherlands, Austria, Sweden and Finland."],
+     exp:"The 'frugal' five: <strong>DK · DE · NL · AT · SE</strong>. France and Ireland were never in the lump-sum club, and Finland gets nothing. The corrections mechanism was born with the <strong>1984 UK rebate</strong>."},
+    {q:"To finance NextGenerationEU, the Commission was authorised, on an exceptional and temporary basis, to:",
+     opts:["Borrow up to EUR 750 billion (in 2018 prices) on capital markets, with new net borrowing stopping at the end of 2026 and repayment running until 2058.",
+           "Borrow up to EUR 750 billion (in current prices), repayable by 2035.",
+           "Run a budget deficit of up to 2% of EU GNI until 2026.",
+           "Raise the GNI call rate permanently to finance grants of EUR 806.9 billion."],
+     exp:"<strong>€750bn in 2018 prices (= €806.9bn current) · net borrowing ends end-2026 · repayment until 2058</strong> (Member States repay the loan component themselves). A deficit remains prohibited — this is borrowing under a <strong>temporarily raised own-resources ceiling: from 1.40% to 2.00% of EU GNI (+0.6 pp)</strong>. About <strong>30% of NGEU</strong> is financed via green bonds."},
+    {q:"The two largest headings of the MFF 2021–2027 by total allocation are:",
+     opts:["Cohesion, Resilience and Values (~€377bn in 2018 prices) followed by Natural Resources and Environment (~€356bn).",
+           "Natural Resources and Environment followed by Single Market, Innovation and Digital.",
+           "Single Market, Innovation and Digital followed by Cohesion, Resilience and Values.",
+           "Neighbourhood and the World followed by Cohesion, Resilience and Values."],
+     exp:"<strong>1. Cohesion, Resilience and Values (€377bn, plus ~€770bn of NGEU flows) · 2. Natural Resources and Environment (€356bn)</strong> — then Single Market/Innovation/Digital (€133bn), Neighbourhood and the World (€101bn), administration (€73bn), migration/borders (€25bn), security/defence (€15bn). Overall: <strong>€1.2 trillion current prices + NGEU ≈ €2 trillion</strong>, with a <strong>30% climate</strong> target across both."},
+    {q:"Which statement about the Recovery and Resilience Facility is correct?",
+     opts:["Payments are performance-based, released on the fulfilment of milestones and targets in national plans that must be consistent with the country-specific recommendations of the European Semester.",
+           "Payments reimburse costs actually incurred by the Member States, audited by the Court of Auditors.",
+           "Plans are adopted by the Commission alone, with 50% earmarked for climate and 30% for digital.",
+           "Italy has received the most grants, while Spain has drawn the most loans."],
+     exp:"The RRF is the <strong>performance-based</strong> flagship (€723.8bn, wholly NGEU-funded): plans with <strong>milestones and targets</strong>, consistency with <strong>European Semester</strong> recommendations, RePowerEU chapters added later. Earmarks: <strong>37% climate, 20% digital</strong>. And the country stats run the other way: <strong>Italy leads on total funds; Spain leads on grants</strong>."}
+  ]},
+
+/* ==================== MODULE 6: ANNUAL BUDGET & DISCHARGE ==================== */
+{ id:"m6", n:"6", name:"Annual budget & discharge", blurb:"1 July · 1 Sept · 1 Oct · 42 days · 21 days · the 3/5 rule",
+  cards:[
+    {q:"The timeline for drafting the annual budget is:",
+     opts:["By 1 July the institutions send their statements of estimates; by 1 September the Commission submits the draft budget; by 1 October the Council adopts its position; the Parliament then has 42 days for its own position.",
+           "By 1 June the institutions send their estimates; by 1 July the Commission submits the draft; by 1 September the Council adopts its position; the Parliament has 30 days.",
+           "By 1 July the Commission submits the draft; by 1 September the Council adopts its position; by 1 October the Parliament takes its position.",
+           "By 1 September the institutions send their estimates; by 1 October the Commission submits the draft; the Council then has 42 days."],
+     exp:"<strong>1 July estimates → 1 September draft (in practice often June) → 1 October Council position → 42 days for the EP</strong>. If they disagree: a <strong>Conciliation Committee has 21 days</strong> to produce a joint text, then <strong>14 days</strong> for approval. Keep the budget clocks (days) separate from the OLP clocks (weeks and months)."},
+    {q:"After budgetary conciliation, if the Parliament approves the joint text but the Council rejects it:",
+     opts:["The Parliament can still adopt the budget, but only by a majority of all its Members AND three fifths of the votes cast.",
+           "The budget is rejected and the Commission must submit a new draft.",
+           "The Parliament can adopt the budget by a simple majority of the votes cast.",
+           "The Council's position is deemed adopted as the annual budget."],
+     exp:"The EP's budgetary trump card: <strong>majority of component members + 3/5 of votes cast</strong> overrides a Council rejection. If <strong>both</strong> reject (or no agreement emerges), the Commission starts over with a new draft. Nothing comparable exists for the Council — the asymmetry favours the Parliament."},
+    {q:"Under the system of provisional twelfths, if the budget is not adopted by 1 January:",
+     opts:["Monthly spending per chapter may not exceed one twelfth of the lower of the previous year's budget or the draft budget; the Council may authorise additional expenditure on a Commission proposal, and the Parliament may reduce it within 30 days by a majority of its component members.",
+           "Monthly spending may not exceed one twelfth of the previous year's budget in all cases, without exception.",
+           "All EU spending is suspended until a new budget is adopted.",
+           "The Commission may spend one twelfth of the draft budget, subject to the Parliament's monthly approval."],
+     exp:"<strong>One twelfth of the LOWER of last year's budget or the draft, per chapter</strong> — with a Council top-up option (Commission proposal) that the <strong>EP can cut back within 30 days by component-members majority</strong>. Every element is a swappable detail."},
+    {q:"In the discharge procedure, the Parliament decides whether to grant discharge:",
+     opts:["By a majority of the votes cast, on a recommendation from the Council, after examining inter alia the Court of Auditors' annual report and statement of assurance.",
+           "By a majority of its component members, on a proposal from the Court of Auditors.",
+           "By a two-thirds majority, on a recommendation from the Commission.",
+           "Jointly with the Council, both acting by qualified majority."],
+     exp:"Chain: <strong>Commission implements and reports → ECA audits (annual report + DAS) → Council RECOMMENDS → EP decides by VOTES CAST</strong>. First vote can <strong>approve or postpone</strong>; a refusal means the accounts are not closed by the discharge decision and the follow-up can even reach the CJEU for failure to act."},
+    {q:"The Integrated Financial and Accountability Reporting package submitted by the Commission includes:",
+     opts:["The Annual Management and Performance Report, the consolidated annual accounts, the internal audit report, the follow-up to previous discharge and a long-term budget forecast.",
+           "The Court of Auditors' annual report and statement of assurance.",
+           "The draft budget, the letter of amendment and any amending budgets.",
+           "The country-specific recommendations of the European Semester."],
+     exp:"Five components, all Commission-authored: <strong>AMPR · consolidated accounts · internal audit report · discharge follow-up · long-term forecast</strong>. The ECA's annual report and DAS are examined <strong>alongside</strong> the package by the Council for its recommendation — they are not part of it."},
+    {q:"Under the rule-of-law conditionality regulation, measures protecting the EU budget are adopted by:",
+     opts:["The Council, by qualified majority within one month, on a proposal from the Commission — with final beneficiaries still to be paid by the Member State concerned.",
+           "The Council, acting unanimously, on a proposal from the Commission.",
+           "The European Council, by consensus, after hearing the Member State concerned.",
+           "The Commission alone, subject to annulment by the Court of Justice."],
+     exp:"<strong>Commission notifies and hears the Member State → proposes → Council decides by QMV within ONE month</strong>; measures can suspend payments or commitments (applied to <strong>Hungary</strong>), but <strong>final beneficiaries must still be paid</strong> by the State. No unanimity, no European Council, no Article 7 link."},
+    {q:"Which statement about who implements the EU budget is correct?",
+     opts:["The Member States implement about three quarters of the budget, but the Commission bears the ultimate responsibility for implementing the entire annual budget.",
+           "The Commission directly implements about three quarters of the budget.",
+           "Responsibility for implementation is shared equally, with neither side bearing ultimate responsibility.",
+           "The Court of Auditors supervises implementation and bears final responsibility."],
+     exp:"<strong>~3/4 implemented by the Member States</strong> (shared management) — yet <strong>ultimate responsibility stays with the Commission</strong>. Management modes: joint with national authorities, direct by the Commission, or indirect via other bodies. Annual revenue must fully cover expenditure: <strong>no deficit allowed</strong>."},
+    {q:"The principle of universality in the EU budget means that:",
+     opts:["Total revenue covers total payment appropriations, with revenue and expenditure entered in full without adjustment against each other.",
+           "All revenue and expenditure must be incorporated in a single document.",
+           "The budget is drawn up and implemented in euros.",
+           "Each appropriation must be assigned to a specific objective."],
+     exp:"<strong>Universality = no earmarking (with limited exceptions) and NO netting</strong> — gross entries only. The single document is <strong>unity</strong>; euros are <strong>unit of account</strong>; purpose-binding is <strong>specification</strong>. Nine principles in total; sound financial management = <strong>economy, efficiency, effectiveness</strong>."}
+  ]},
+
+/* ==================== MODULE 7: BETTER REGULATION ==================== */
+{ id:"m7", n:"7", name:"Better Regulation", blurb:"Evaluate first · the 5 criteria · who sits on the RSB",
+  cards:[
+    {q:"The difference between an evaluation and a fitness check is that:",
+     opts:["An evaluation focuses on one intervention, while a fitness check covers multiple interventions and their interaction within a common policy field to identify gaps and synergies.",
+           "An evaluation is forward-looking, while a fitness check is backward-looking.",
+           "An evaluation is carried out by the Commission, while fitness checks are carried out by the Regulatory Scrutiny Board.",
+           "An evaluation concerns legislation, while a fitness check concerns spending programmes only."],
+     exp:"Both are <strong>backward-looking</strong>; the divider is scope: <strong>one intervention vs several interacting ones</strong>. The forward-looking instrument is the <strong>impact assessment</strong>. And the <strong>'evaluate first' principle</strong>: evaluation precedes any work on revising an existing policy or law."},
+    {q:"Impact assessments are required for:",
+     opts:["Initiatives expected to have significant economic, social or environmental impacts — whether legislative or non-legislative, delegated or implementing acts.",
+           "Legislative proposals only, under the ordinary legislative procedure.",
+           "All Commission initiatives without exception.",
+           "Initiatives with budgetary implications above a threshold set by DG Budget."],
+     exp:"The trigger is <strong>significant expected impacts</strong>, and the net is wide: <strong>legislative AND non-legislative initiatives, including delegated and implementing acts</strong>. They are forward-looking, weigh policy options, limit administrative burden, and include <strong>subsidiarity and proportionality checks</strong>."},
+    {q:"The five assessment criteria used in all evaluations and fitness checks are:",
+     opts:["Effectiveness, efficiency, relevance, coherence and EU added value.",
+           "Effectiveness, efficiency, economy, proportionality and transparency.",
+           "Effectiveness, efficiency, relevance, subsidiarity and sustainability.",
+           "Relevance, coherence, legality, regularity and EU added value."],
+     exp:"<strong>Effectiveness · efficiency · relevance · coherence · EU ADDED VALUE</strong> (the added-value test is where subsidiarity bites). 'Economy, efficiency, effectiveness' is the <strong>Court of Auditors' performance-audit</strong> trio — a deliberate near-collision of vocabularies."},
+    {q:"The Regulatory Scrutiny Board consists of:",
+     opts:["Nine members: four high-level Commission officials, four external experts, and a Commission Director-General who chairs the Board.",
+           "Nine members: four Commission officials and five external experts, chaired by the Secretary-General.",
+           "Seven members: three Commission officials and four external experts, chaired by a Director-General.",
+           "Nine external experts appointed by the European Parliament."],
+     exp:"<strong>9 = 4 internal + 4 external + 1 chairing DG</strong> — an independent body <strong>within</strong> the Commission. It reviews <strong>draft impact assessments and major evaluations and fitness checks</strong>, and also coaches services ahead of formal submission."},
+    {q:"A NEGATIVE opinion of the Regulatory Scrutiny Board on an impact assessment:",
+     opts:["Normally requires revision and resubmission — whereas for an evaluation a negative opinion does not formally block finalisation, though it must be addressed.",
+           "Definitively blocks the initiative concerned.",
+           "Has no procedural consequence, since RSB opinions are advisory.",
+           "Must be overridden by the College acting unanimously."],
+     exp:"The asymmetry: <strong>impact assessment — revise and resubmit; evaluation — may still be finalised, but the opinion must be addressed</strong>. The other verdicts: <strong>positive</strong> and <strong>positive with reservations</strong> (proceed once comments are addressed)."},
+    {q:"The 'one in, one out' approach means that:",
+     opts:["Additional administrative burden from new legislation should be offset by an equivalent reduction of administrative burden in the same policy area.",
+           "Every new legislative act must repeal exactly one existing act.",
+           "Each new EU programme must replace an expiring programme in the MFF.",
+           "For every new comitology committee created, one must be dissolved."],
+     exp:"It offsets <strong>administrative BURDEN, not acts</strong> — and within the <strong>same policy area</strong>. It sits alongside <strong>REFIT</strong> (simpler, more targeted laws; scoreboard; annual burden survey) and <strong>strategic foresight</strong> among the newer better-regulation approaches."},
+    {q:"A 'call for evidence' is used:",
+     opts:["Often at the start of an initiative, to describe the problem, objectives, policy options, impacts and consultation strategy, so stakeholders can give early feedback before the proposal is developed.",
+           "After the adoption of a proposal, to gather implementation data from Member States.",
+           "Exclusively for delegated acts, replacing the four-week feedback period.",
+           "By the Regulatory Scrutiny Board, to collect evidence for its opinions."],
+     exp:"The <strong>opening move</strong> of the policy cycle: problem, objectives, options, impacts, consultation strategy — published for <strong>early stakeholder feedback</strong> (via the Have Your Say portal) before the Commission develops the proposal. Substantive preparatory work also requires <strong>forward planning and political validation</strong>."}
+  ]}
+
+];
+
+/* give every question a stable id */
+MODULES.forEach(m => m.cards.forEach((c,i)=> c.id = m.id+"_"+i));
+
+/* ============================ STORAGE ============================ */
+const STORE_KEY = "eu_lawmaking_budget_mcq_v1";
+const memStore = {};
+async function loadProgress(){
+  try{
+    const s = localStorage.getItem(STORE_KEY);
+    return s ? JSON.parse(s) : {};
+  }catch(e){
+    return memStore[STORE_KEY] ? JSON.parse(memStore[STORE_KEY]) : {};
+  }
+}
+async function saveProgress(obj){
+  const s = JSON.stringify(obj);
+  memStore[STORE_KEY] = s;
+  try{ localStorage.setItem(STORE_KEY, s); }catch(e){/* in-memory only */}
+}
+
+let progress = {};
+function isKnown(id){ return progress[id] === "known"; }
+function moduleKnown(m){ return m.cards.filter(c=>isKnown(c.id)).length; }
+
+/* ============================ STAR RING ============================ */
+function buildRing(elm, lit, total, size){
+  total = total || 12; size = size || 54;
+  const r = size/2 - size*0.13;
+  const fs = size*0.17;
+  elm.innerHTML = "";
+  elm.classList.add("ring");
+  elm.style.width = size+"px"; elm.style.height = size+"px";
+  for(let i=0;i<total;i++){
+    const ang = i*(360/total);
+    const s = document.createElement("span");
+    s.className = "star" + (i<lit ? " lit":"");
+    s.textContent = "★";
+    s.style.fontSize = fs+"px";
+    s.style.transform = "translate(-50%,-50%) rotate("+ang+"deg) translateY("+(-r)+"px) rotate("+(-ang)+"deg)";
+    elm.appendChild(s);
+  }
+  const c = document.createElement("div");
+  c.className = "center";
+  c.style.fontSize = (size*0.22)+"px";
+  c.textContent = Math.round((lit/total)*100)+"%";
+  elm.appendChild(c);
+}
+function ringLit(known, total){ return total===0?0:Math.round((known/total)*12); }
+
+/* ============================ HOME ============================ */
+const el = id => document.getElementById(id);
+
+function renderHome(){
+  const totalCards = MODULES.reduce((a,m)=>a+m.cards.length,0);
+  const knownCards = MODULES.reduce((a,m)=>a+moduleKnown(m),0);
+  el("globalTally").textContent = knownCards+" / "+totalCards+" mastered";
+  buildRing(el("mastRing"), ringLit(knownCards,totalCards), 12, 52);
+
+  const list = el("modList");
+  list.innerHTML = "";
+  MODULES.forEach(m=>{
+    const known = moduleKnown(m), tot = m.cards.length;
+    const pct = tot? known/tot : 0;
+    const b = document.createElement("button");
+    b.className = "mod";
+    b.innerHTML =
+      '<span class="num">'+m.n+'</span>'+
+      '<span class="body">'+
+        '<p class="title">'+m.name+'</p>'+
+        '<p class="blurb">'+m.blurb+'</p>'+
+        '<span class="barwrap"><span class="bar '+(pct>=1?'done':'')+'" style="width:'+Math.round(pct*100)+'%"></span></span>'+
+      '</span>'+
+      '<span class="ring-wrap"></span>';
+    b.addEventListener("click", ()=> openDeck(m));
+    list.appendChild(b);
+    buildRing(b.querySelector(".ring-wrap"), ringLit(known,tot), 12, 46);
+  });
+}
+
+/* ============================ STUDY ============================ */
+let curMod=null, order=[], idx=0, missesOnly=false, reviewAll=false;
+let answered=false, sessRight=0, sessTotal=0;
+const LETTERS = ["a","b","c","d"];
+
+function buildOrder(){
+  let cards;
+  if(reviewAll){
+    cards = [];
+    MODULES.forEach(m=> m.cards.forEach(c=> cards.push(Object.assign({_mod:m},c))));
+  } else {
+    cards = curMod.cards.map(c=> Object.assign({_mod:curMod},c));
+  }
+  if(missesOnly) cards = cards.filter(c=> !isKnown(c.id));
+  return cards;
+}
+
+function openDeck(m, all){
+  reviewAll = !!all;
+  curMod = m || null;
+  missesOnly = false;
+  sessRight = 0; sessTotal = 0;
+  el("missesToggle").classList.remove("on");
+  order = buildOrder();
+  idx = 0;
+  el("home").classList.add("hidden");
+  el("study").classList.add("active");
+  const title = reviewAll ? "Full mock" : m.name;
+  const sub = reviewAll ? "All questions from the 7 modules, shuffled" : "Module "+m.n;
+  el("deckName").firstChild.nodeValue = title;
+  el("deckSub").textContent = sub;
+  if(reviewAll) shuffleOrder();
+  renderCard();
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function closeDeck(){
+  el("study").classList.remove("active");
+  el("home").classList.remove("hidden");
+  renderHome();
+}
+
+function renderCard(){
+  answered = false;
+  el("explain").classList.remove("show","good","bad");
+  el("doneBanner").classList.remove("show");
+  el("qcard").style.display = "";
+  el("nextBtn").style.visibility = "hidden";
+  el("sessScore").textContent = sessTotal>0 ? ("Session: "+sessRight+"/"+sessTotal) : "";
+
+  if(order.length === 0){
+    el("qcard").style.display = "none";
+    el("cardPos").textContent = "0";
+    el("cardTotal").textContent = "0";
+    el("doneBanner").classList.add("show");
+    const known = curMod? moduleKnown(curMod): MODULES.reduce((a,m)=>a+moduleKnown(m),0);
+    const tot = curMod? curMod.cards.length : MODULES.reduce((a,m)=>a+m.cards.length,0);
+    buildRing(el("doneRing"), ringLit(known,tot), 12, 58);
+    updateDeckRing();
+    return;
+  }
+
+  if(idx>=order.length) idx = order.length-1;
+  const c = order[idx];
+  el("frontTag").textContent = c._mod ? c._mod.name : "Module";
+  el("qText").innerHTML = c.q;
+  el("cardPos").textContent = (idx+1);
+  el("cardTotal").textContent = order.length;
+  el("prevBtn").disabled = idx===0;
+
+  /* shuffle options; original index 0 is correct */
+  const perm = [0,1,2,3].slice(0, c.opts.length);
+  for(let i=perm.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    const t=perm[i]; perm[i]=perm[j]; perm[j]=t;
+  }
+  const optsBox = el("opts");
+  optsBox.innerHTML = "";
+  perm.forEach((origIdx, pos)=>{
+    const b = document.createElement("button");
+    b.className = "opt";
+    b.dataset.orig = origIdx;
+    b.innerHTML = '<span class="letter">'+LETTERS[pos]+'</span><span>'+c.opts[origIdx]+'</span>';
+    b.addEventListener("click", ()=> answer(b, origIdx===0));
+    optsBox.appendChild(b);
+  });
+
+  updateDeckRing();
+}
+
+async function answer(btn, correct){
+  if(answered) return;
+  answered = true;
+  sessTotal++;
+  const c = order[idx];
+
+  const buttons = Array.from(el("opts").children);
+  buttons.forEach(b=>{
+    b.disabled = true;
+    const isCorrect = b.dataset.orig === "0";
+    if(isCorrect) b.classList.add("correct");
+    else if(b===btn) b.classList.add("wrong");
+    else b.classList.add("dim");
+  });
+
+  const exp = el("explain");
+  if(correct){
+    sessRight++;
+    progress[c.id] = "known";
+    exp.classList.add("good");
+    el("verdictHead").textContent = "Correct — mastered";
+  } else {
+    delete progress[c.id];
+    exp.classList.add("bad");
+    el("verdictHead").textContent = "Not quite — kept in your review pool";
+  }
+  el("expText").innerHTML = c.exp;
+  exp.classList.add("show");
+  el("sessScore").textContent = "Session: "+sessRight+"/"+sessTotal;
+  el("nextBtn").style.visibility = "visible";
+  await saveProgress(progress);
+  updateDeckRing();
+}
+
+function next(){
+  if(!answered && order.length>0) return;
+  if(idx < order.length-1){ idx++; renderCard(); }
+  else {
+    if(missesOnly){ order = buildOrder(); idx = 0; renderCard(); }
+    else checkComplete();
+  }
+}
+
+function checkComplete(){
+  const allKnown = order.length>0 && order.every(c=> isKnown(c.id));
+  if(allKnown){
+    el("qcard").style.display="none";
+    el("nextBtn").style.visibility="hidden";
+    el("doneBanner").classList.add("show");
+    const known = curMod? moduleKnown(curMod): MODULES.reduce((a,m)=>a+moduleKnown(m),0);
+    const tot = curMod? curMod.cards.length : MODULES.reduce((a,m)=>a+m.cards.length,0);
+    buildRing(el("doneRing"), ringLit(known,tot), 12, 58);
+  } else {
+    /* re-run the ones still missed */
+    order = order.filter(c=> !isKnown(c.id));
+    idx = 0; renderCard();
+  }
+}
+
+function updateDeckRing(){
+  if(reviewAll){
+    const known = MODULES.reduce((a,m)=>a+moduleKnown(m),0);
+    const tot = MODULES.reduce((a,m)=>a+m.cards.length,0);
+    buildRing(el("deckRing"), ringLit(known,tot), 12, 46);
+  } else if(curMod){
+    buildRing(el("deckRing"), ringLit(moduleKnown(curMod), curMod.cards.length), 12, 46);
+  }
+}
+
+function shuffleOrder(){
+  for(let i=order.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    const t=order[i]; order[i]=order[j]; order[j]=t;
+  }
+  idx=0;
+}
+
+/* ============================ EVENTS ============================ */
+el("nextBtn").addEventListener("click", next);
+el("prevBtn").addEventListener("click", ()=>{ if(idx>0){idx--;renderCard();} });
+el("shuffleBtn").addEventListener("click", ()=>{ shuffleOrder(); renderCard(); });
+el("backBtn").addEventListener("click", closeDeck);
+el("reviewAllBtn").addEventListener("click", ()=> openDeck(null, true));
+el("missesToggle").addEventListener("click", ()=>{
+  missesOnly = !missesOnly;
+  el("missesToggle").classList.toggle("on", missesOnly);
+  order = buildOrder(); idx=0; renderCard();
+});
+el("resetBtn").addEventListener("click", async ()=>{
+  if(confirm("Reset all progress? This will clear your mastered-question marks.")){
+    progress = {};
+    await saveProgress(progress);
+    renderHome();
+  }
+});
+document.addEventListener("keydown", e=>{
+  if(!el("study").classList.contains("active")) return;
+  const keys = {"1":0,"2":1,"3":2,"4":3,"a":0,"b":1,"c":2,"d":3};
+  if(!answered && (e.key in keys)){
+    const buttons = el("opts").children;
+    if(buttons[keys[e.key]]) buttons[keys[e.key]].click();
+  } else if(answered && (e.code==="Space" || e.code==="ArrowRight" || e.key==="Enter")){
+    e.preventDefault(); next();
+  } else if(e.code==="ArrowLeft" && idx>0){ idx--; renderCard(); }
+});
+
+/* ============================ INIT ============================ */
+(async function init(){
+  progress = await loadProgress();
+  renderHome();
+})();
+</script>
+</body>
+</html>
